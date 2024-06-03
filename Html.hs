@@ -9,7 +9,7 @@ h1_ :: String -> Structure
 h1_ = Structure . tag_ "h1"
 
 h2_ :: String -> Structure
-h2_ Structure . tag_ "h2"
+h2_ = Structure . tag_ "h2"
 
 ul_ :: [Structure] -> Structure
 ul_ =
