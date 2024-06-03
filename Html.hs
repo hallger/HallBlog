@@ -6,8 +6,7 @@ newtype Html = Html String
 type Title = String
 type Body = String
 
--- * Tags
-
+-- * html
 html_ :: Title -> Structure -> Html
 html_ title content =
   Html
@@ -17,7 +16,7 @@ html_ title content =
     )
   )
 
-
+-- * Tags
 p_ :: String -> Structure
 p_ = Structure . tag "p" . escape
 
@@ -29,10 +28,10 @@ h2_ = Structure . tag "h2" . escape
 
 list_ :: String -> [Structure] -> Structure
 list_ list_type
-  | list_type == "ul" = 
-    Structure . tag "ul" . concat . map (tag "li" . getStructStr)
+  | list_type == "ul" =
+    Structure . tag "ul" . concatMap (tag "li" . getStructStr)
   | list_type == "ol" =
-    Structure . tag "ul" . concat . map (tag "li" . getStructStr)
+    Structure . tag "ul" . concatMap (tag "li" . getStructStr)
 
 code_ :: String -> Structure
 code_ = Structure . tag "pre" . escape
@@ -59,7 +58,7 @@ escape =
         '\'' -> "&#39;"
         '_' -> "[c]"
     in
-        concat . map escapeChar
+        concatMap escapeChar
 
 getStructStr :: Structure -> String
 getStructStr struct =
