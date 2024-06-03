@@ -13,7 +13,7 @@ h2_ = Structure . tag_ "h2"
 
 ul_ :: [Structure] -> Structure
 ul_ =
-  Structure . el "ul" . concat . map (el "li" . getStructStr)
+  Structure . tag_ "ul" . concat . map (tag_ "li" . getStructStr)
 
 tag_ :: String -> String -> String
 tag_ t c
