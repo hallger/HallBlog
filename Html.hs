@@ -11,9 +11,12 @@ h1_ = Structure . tag_ "h1"
 h2_ :: String -> Structure
 h2_ = Structure . tag_ "h2"
 
-ul_ :: [Structure] -> Structure
-ul_ =
-  Structure . tag_ "ul" . concat . map (tag_ "li" . getStructStr)
+list_ :: String -> [Structure] -> Structure
+list_ list_type
+  | list_type == "ul" = 
+    Structure . tag_ "ul" . concat . map (tag_ "li" . getStructStr)
+  | list_type == "ol" =
+    Structure . tag_ "ul" . concat . map (tag_ "li" . getStructStr)
 
 tag_ :: String -> String -> String
 tag_ t c
