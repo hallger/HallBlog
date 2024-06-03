@@ -19,13 +19,13 @@ html_ title content =
 
 
 p_ :: String -> Structure
-p_ = Structure . tag "p"
+p_ = Structure . tag "p" . escape
 
 h1_ :: String -> Structure
-h1_ = Structure . tag "h1"
+h1_ = Structure . tag "h1" . escape
 
 h2_ :: String -> Structure
-h2_ = Structure . tag "h2"
+h2_ = Structure . tag "h2" . escape
 
 list_ :: String -> [Structure] -> Structure
 list_ list_type
@@ -34,10 +34,18 @@ list_ list_type
   | list_type == "ol" =
     Structure . tag "ul" . concat . map (tag "li" . getStructStr)
 
+code_ :: String -> Structure
+code_ = Structure . tag "pre" . escape
+
 -- * Utils
 tag :: String -> String -> String
 tag t c
   = "<" <> t <> ">" <> c <> "</" <> t <> ">"
+
+render :: Html -> String
+render html =
+  case html of
+    Html str -> str
 
 escape :: String -> String
 escape =
