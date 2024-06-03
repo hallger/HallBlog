@@ -1,4 +1,3 @@
-import Control.Monad.RWS (gets)
 -- Html.hs
 
 -- * Types
