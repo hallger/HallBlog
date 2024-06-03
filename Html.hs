@@ -1,7 +1,9 @@
 -- Html.hs
 
+-- * Types
 newtype Structure = Structure String
 
+-- * Tags
 p_ :: String -> Structure
 p_ = Structure . tag_ "p"
 
@@ -18,6 +20,7 @@ list_ list_type
   | list_type == "ol" =
     Structure . tag_ "ul" . concat . map (tag_ "li" . getStructStr)
 
+-- * Utils
 tag_ :: String -> String -> String
 tag_ t c
   = "<" <> t <> ">" <> c <> "</" <> t <> ">"
