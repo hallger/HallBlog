@@ -64,3 +64,7 @@ getStructStr :: Structure -> String
 getStructStr struct =
   case struct of
     Structure str -> str
+
+instance Semigroup Structure where
+  (<>) c1 c2 =
+    Structure (getStructStr c1 <> getStructStr c2)
