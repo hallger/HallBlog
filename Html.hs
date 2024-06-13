@@ -9,6 +9,8 @@ module Html
     , h2_
     , p_
     , list_
+    , ul_
+    , ol_
     , code_
     , render
     )

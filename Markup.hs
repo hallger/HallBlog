@@ -2,35 +2,43 @@
 
 module Markup
     ( Document
-    , Structure (..)
+    , Structure(..)
+    , parse
     )
     where
+
 import Numeric.Natural
+import Data.Maybe ( maybeToList )
+
 type Document = [Structure]
+
 data Structure =
   Heading Natural String
   | Paragraph String
   | UnorderedList [String]
   | OrderedList [String]
   | CodeBlock [String]
-  deriving Show
+  deriving (Eq, Show)
 
 parse :: String -> Document
-parse = parseLines [] . lines
+parse = parseLines Nothing . lines
 
-parseLines :: [String] -> [String] -> Document
-parseLines currentParagraph txts =
-    let
-        paragraph = Paragraph (unlines (reverse currentParagraph))
-    in
-        case txts of
-            [] -> [paragraph]
-            currentLine : rest ->
-                if trim currentLine == ""
-                    then
-                        paragraph : parseLines [] rest
-                    else
-                        parseLines (currentLine : currentParagraph) rest
+parseLines :: Maybe Structure -> [String] -> Document
+parseLines context txts =
+    case txts of
+        [] -> maybeToList context
+
+        -- h1
+        ('#': ' ' : line) : rest ->
+            maybe id (:) context (Heading 1 (trim line) : parseLines Nothing rest)
+        
+        -- ul
+        ('-': ' ' : line) : rest ->
+            case context of
+                Just (UnorderedList list) ->
+                    parseLines (Just (UnorderedList (list <> [trim line]))) rest
+            
+            
 
 trim :: String -> String
 trim = unwords . words

@@ -33,6 +33,13 @@ list_ list_type
   | list_type == "ol" =
     Structure . tag "ul" . concatMap (tag "li" . getStructStr)
 
+ul_ :: [Structure] -> Structure
+ul_ = 
+    Structure . tag "ul" . concatMap (tag "li" . getStructStr)
+
+ol_ :: [Structure] -> Structure
+ol_ = 
+    Structure . tag "ol" . concatMap (tag "li" . getStructStr)
 code_ :: String -> Structure
 code_ = Structure . tag "pre" . escape
 
